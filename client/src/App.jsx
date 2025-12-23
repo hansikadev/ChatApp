@@ -6,7 +6,7 @@ import Profilepage from './pages/Profilepage'
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-[url('./src/assets/bgimage.jpg')] bg-contain ">
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/login' element={<Loginpage/>} />
