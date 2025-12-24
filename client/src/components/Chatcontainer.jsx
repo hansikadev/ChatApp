@@ -1,7 +1,14 @@
-import React from "react";
-import assets from "../assets/assets.js";
+import React, { useRef, useEffect } from "react";
+import assets,{messagesDummyData} from "../assets/assets.js";
 
 const Chatcontainer = ({ selectedUser, setSelectedUser }) => {
+  const scrollEnd = useRef();
+
+  // Auto-scroll to the bottom whenever a user is selected or messages change
+  useEffect(() => {
+    scrollEnd.current?.scrollIntoView({ behavior: "smooth" });
+  }, [selectedUser]);
+  
   return selectedUser ? (
     <div className="h-full overflow-scroll relative backdrop-blur-lg">
       {/* Header */}
@@ -11,8 +18,58 @@ const Chatcontainer = ({ selectedUser, setSelectedUser }) => {
           Martin Johnson
           <span className="w-2 h-2 rounded-full bg-green-500"></span>
         </p>
-        <img  onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt="" className="md:hidden max-w-7 cursor-pointer"/>
+        <img
+          onClick={() => setSelectedUser(null)}
+          src={assets.arrow_icon}
+          alt=""
+          className="md:hidden max-w-7 cursor-pointer"
+        />
         <img src={assets.help_icon} alt="" className="max-md:hidden max-w-5" />
+      </div>
+      {/* ----- Chat Messages Area ----- */}
+      <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
+        {messagesDummyData.map((msg, index) => (
+          <div
+            key={index}
+            className={`flex items-end gap-2 justify-end ${
+              msg.senderId !== "680f50e4f10f3cd28382ecf9" && "flex-row-reverse"
+            }`}
+          >
+            {msg.image ? (
+              <img
+                src={msg.image}
+                alt=""
+                className="max-w-57.5 border border-gray-700 rounded-lg overflow-hidden mb-8"
+              />
+            ) : (
+              <p
+                className={`p-2 max-w-50 md:text-sm font-light rounded-lg mb-8 break-all bg-violet-500/30 text-white ${
+                  msg.senderId === "680f50e4f10f3cd28382ecf9"
+                    ? "rounded-br-none"
+                    : "rounded-bl-none"
+                }`}
+              >
+                {msg.text}
+              </p>
+            )}
+
+            {/* Sender Metadata */}
+            <div className="text-center text-xs">
+              <img
+                src={
+                  msg.senderId === "680f50e4f10f3cd28382ecf9"
+                    ? assets.avatar_icon
+                    : assets.profile_martin
+                }
+                alt=""
+                className="w-7 rounded-full"
+              />
+              <p className="text-gray-500">{msg.createdAt}</p>
+            </div>
+          </div>
+        ))}
+        {/* Scroll Anchor */}
+        <div ref={scrollEnd}></div>
       </div>
     </div>
   ) : (
