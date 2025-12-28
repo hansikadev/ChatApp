@@ -13,7 +13,7 @@ export const signup = async (req, res) => {
         const user = await User.findOne({ email })
 
         if(user) {
-            return res.json({ success: false, message: "missing details" });
+            return res.json({ success: false, message: "user already exists, kindly login" });
         }
         
         const salt = await bcrypt.genSalt(10);
@@ -41,7 +41,7 @@ export const login = async (req, res) => {
         const isPasswordCorrect = await bcrypt.compare(password, userData.password)
         
         if(!isPasswordCorrect) {
-            return res.json({success:false,mmessage:"invalid credentials"})
+            return res.json({success:false,message:"invalid credentials"})
         }
 
         const token = generateToken(newUser._id);
@@ -57,6 +57,13 @@ export const login = async (req, res) => {
 export const chechAuth = (req, res) => {
     res.json({ success: true, user: req.user })
 };
+//  what is the use of this function?
+// What happens on refresh?
+// Browser refreshes
+// React state is cleared
+// User appears logged out in frontend
+// BUT token still exists (localStorage / cookies)
+
 
 
 //controller to update user profile details
