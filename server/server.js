@@ -4,6 +4,7 @@ import cors from "cors"
 import http from "http" 
 import { connectDB } from "./lib/db.js"
 import userrouter from "./routes/userroutes.js"
+import messagerouter from "./routes/messageroutes.js"
 
 //create express app and http server
 const app = express()
@@ -16,7 +17,8 @@ app.use(cors())
 
 //routes sateup
 app.use("/api/status", (req, res) => res.send("server is live"))
-app.use("/api/auth",userrouter)
+app.use("/api/auth", userrouter)
+app.use("/api/messages",messagerouter)
 
 //connect to mongodb
 await connectDB()
