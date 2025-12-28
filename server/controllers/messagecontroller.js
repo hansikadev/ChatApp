@@ -1,5 +1,7 @@
 import Message from "../models/message.js";
 import User from "../models.user.js";
+import {io,userSocketMap} from "../server.js"
+
 
 //get all users except the logged in user
 export const getUsersForSidebar = async () => {
@@ -79,3 +81,37 @@ export const markMessageAsSeen = async (req, res) => {
   }
 };
 
+
+//send message to selected user
+export const sendMessage = async (req, res) => {
+  try {
+    const { text, image } = req.body;
+    const receiverId = req.params.id;
+    const senderId = req.user._id;
+
+    let imageUrl;
+    if (image) {
+      const uploadResponse = await cloundinary.uploader.upload(image)
+      imageUrl = uploadResponse.secure_url; 
+    }
+    const newMessage = await MessageChannel.create({
+      senderId,
+      receiverId,
+      text,
+      image:imageUrl
+    })
+
+    //emit the new message to the receiver's socket
+    const receiverSocketId = userSocketMap[receiverId];
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage",newMessage)
+    }
+
+    res.json({ success: true, newMessage });
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ success: false, message: error.message });
+  
+  }
+}
