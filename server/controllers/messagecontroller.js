@@ -1,5 +1,5 @@
 import Message from "../models/message.js";
-import User from "../models.user.js";
+import User from "../models/user.js";
 import {io,userSocketMap} from "../server.js"
 
 

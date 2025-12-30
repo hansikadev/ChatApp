@@ -1,13 +1,15 @@
-import { generateToken } from "../lib/utils";
-import User from "../models/usermodel";
+import { generateToken } from "../lib/utils.js";
+import User from "../models/user.js";
 import bcrypt from "bcryptjs"
-import cloudinary from "../lib/cloudinary";
+import cloudinary from "../lib/cloudinary.js";
 
 //signup a new user
 export const signup = async (req, res) => {
     const { fullName, email, password, bio } = req.body;
+    console.log("REGISTER API HIT", req.body);
+
     try {
-        if (!fullName || !email || !password || !bio) {
+        if (!fullName || !email || !password ) {
             return res.json({ success: false, message: "missing details" })
         }
         const user = await User.findOne({ email })
@@ -46,7 +48,7 @@ export const login = async (req, res) => {
 
         const token = generateToken(newUser._id);
 
-        res.json({success: true,userData: newUser,token,message: "account created successfully" });
+        res.json({success: true,userData: newUser,token,message: "account login successful" });
     } catch (error) {
         console.log(error.message);
         res.json({success:false,message:error.message})
