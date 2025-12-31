@@ -6,7 +6,7 @@ const userrouter=express.Router()
 userrouter.post("/signup", signup)
 userrouter.post("/login", login);
 userrouter.put("/update-profile", protectRoute, updateProfile);
-userrouter.put("/check", protectRoute, chechAuth);
+userrouter.get("/check", protectRoute, chechAuth);
 
 
-export default userrouter
+export default userrouter 

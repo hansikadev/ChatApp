@@ -40,8 +40,11 @@ export const login = async (req, res) => {
         const { email, password } = req.body;
         const userData = await User.findOne({ email })
         
+        if (!userData) {
+          return res.json({ success: false, message: "user does not exist" });
+        }
         const isPasswordCorrect = await bcrypt.compare(password, userData.password)
-        
+         
         if(!isPasswordCorrect) {
             return res.json({success:false,message:"invalid credentials"})
         }
@@ -80,7 +83,11 @@ export const updateProfile = async (req, res) => {
             { new: true });
         } else {
             const upload = await cloudinary.uploader.upload(profilePic);
-            updatedUser = await User.findByIdAndUpdate(userId, { profile: upload.secure_url, bio, fullName }, { new: true });
+            updatedUser = await User.findByIdAndUpdate(
+              userId,
+              { profilePic: upload.secure_url, bio, fullName },
+              { new: true }
+            );
         }
         res.json({success:true,user:updatedUser})
     } catch (error) {
