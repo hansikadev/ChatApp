@@ -49,13 +49,15 @@ export const login = async (req, res) => {
             return res.json({success:false,message:"invalid credentials"})
         }
 
-        const token = generateToken(newUser._id);
+        const token = generateToken(userData._id);
+        
 
-        res.json({success: true,userData: newUser,token,message: "account login successful" });
+        res.json({success: true,userData: userData,token,message: "account login successful" });
     } catch (error) {
-        console.log(error.message);
-        res.json({success:false,message:error.message})
+        console.log("This is the error:", error.message);
+        res.json({ success: false, message: error.message });
     }
+    
 }
 
 //controller to check if user is authenticated

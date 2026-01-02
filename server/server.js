@@ -117,12 +117,12 @@ io.on("connection", (socket) => {
   }
 
   // send online users
-  io.emit("getOnlineusers", Object.keys(userSocketMap));
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
     console.log("User disconnected:", userId);
     delete userSocketMap[userId];
-    io.emit("getOnlineusers", Object.keys(userSocketMap));
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 });
 
