@@ -54,7 +54,7 @@ const ProfilePage = () => {
               src={
                 selectedImg
                   ? URL.createObjectURL(selectedImg)
-                  : assets.avatar_icon
+                  : authUser?.profilePic
               }
               alt="Avatar"
               className={`w-12 h-12 ${selectedImg && "rounded-full"}`}

@@ -105,6 +105,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         updateProfile,
+        axios
       }}
     >
       {children}
