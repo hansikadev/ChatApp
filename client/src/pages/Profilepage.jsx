@@ -49,6 +49,7 @@ const ProfilePage = () => {
               id="avatar"
               accept=".png, .jpg, .jpeg"
               hidden
+            
             />
             <img
               src={
@@ -57,7 +58,7 @@ const ProfilePage = () => {
                   : authUser?.profilePic
               }
               alt="Avatar"
-              className={`w-12 h-12 ${selectedImg && "rounded-full"}`}
+              className="w-12 h-12 rounded-full"
             />
             upload profile image
           </label>

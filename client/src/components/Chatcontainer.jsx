@@ -6,7 +6,7 @@ import { ChatContext } from "../../context/ChatContext.jsx";
 import { AuthContext } from "../../context/authContext.jsx";
 
 const Chatcontainer = () => {
-  const { messages,selectedUser,setSelectedUser,sendMessages,getMessages} = useContext(ChatContext)
+  const { messages,selectedUser,setSelectedUser,sendMessage,getMessages} = useContext(ChatContext)
   const { authUser,onlineUsers }= useContext(AuthContext)
   const scrollEnd = useRef();
 
@@ -16,7 +16,7 @@ const Chatcontainer = () => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (input.trim() === "") return null;
-    await sendMessages({ text: input.trim() });
+    await sendMessage({ text: input.trim() });
     setInput("")
   }
 
@@ -29,7 +29,7 @@ const Chatcontainer = () => {
     }
     const reader = new FileReader();
     reader.onloadend = async () => {
-      await sendMessages({ image: reader.result })
+      await sendMessage({ image: reader.result })
       e.target.value =""
     }
     reader.readAsDataURL(file)
@@ -117,7 +117,7 @@ const Chatcontainer = () => {
       <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3">
         <div className="flex-1 flex items-center bg-gray-100/12 px-3 rounded-full">
           <input
-            onChange={() => setInput(e.target.value)}
+            onChange={(e) => setInput(e.target.value)}
             value={input}
             onKeyDown={(e)=>e.key==="Enter"? handleSendMessage(e): null}
             type="text"
