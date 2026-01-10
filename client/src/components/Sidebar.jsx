@@ -1,7 +1,7 @@
 import assets from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import React,{ useContext } from "react";
-import { AuthContext } from "../../context/authContext";
+import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -24,7 +24,7 @@ const Sidebar = () => {
   return (
     <div
       className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${
-        selectedUser ? "max-md:hidden" : ""
+        selectedUser ? "max-md:hidden" : "" 
       }`}
     >
       <div className="pb-5">

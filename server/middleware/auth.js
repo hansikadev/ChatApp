@@ -32,4 +32,4 @@ export const protectRoute = async (req, res, next) => {
     console.error("AUTH ERROR:", error.message);
     return res.json({ success: false, message: "user not found" });
   }
-};
+}; 

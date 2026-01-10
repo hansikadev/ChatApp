@@ -19,9 +19,7 @@ const Homepage = () => {
       >
         <Sidebar/>
         <Chatcontainer/>
-        <Rightsidebar
-
-        />
+        <Rightsidebar/>
       </div>
     </div>
   );
