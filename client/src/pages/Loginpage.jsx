@@ -19,7 +19,7 @@ const LoginPage = () => {
       setIsDataSubmitted(true);
       return;
     }
-
+ 
     login(currState === "Sign up" ? "signup" : "login", {
       fullName,
       email,
@@ -27,7 +27,7 @@ const LoginPage = () => {
       bio,
     });
   }
-
+ 
   return (
     <div className="min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl">
       {/* ------ left ------ */}

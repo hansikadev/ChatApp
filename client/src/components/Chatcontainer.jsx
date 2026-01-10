@@ -3,7 +3,7 @@ import assets,{messagesDummyData} from "../assets/assets.js";
 import { formatMessageTime } from "../lib/util.js";
 import { useContext } from "react";
 import { ChatContext } from "../../context/ChatContext.jsx";
-import { AuthContext } from "../../context/authContext.jsx";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
 const Chatcontainer = () => {
   const { messages,selectedUser,setSelectedUser,sendMessage,getMessages} = useContext(ChatContext)

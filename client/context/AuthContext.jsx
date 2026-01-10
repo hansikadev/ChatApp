@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+ import React, { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import axios from "axios";
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (!data.success) {
         toast.error(data.message);
         return;
-      }
+      }  
 
       // ✅ BACKEND sends: userData + token
       setAuthUser(data.userData);
