@@ -18,7 +18,7 @@ const Sidebar = () => {
   const filteredUsers = input ? users.filter((user) => user.fullName.toLowerCase().include(input.toLowerCase())) : users;
   
   useEffect(() => {
-    getUsers();
+    getUsers();     
   },[onlineUsers])
   
   return (
