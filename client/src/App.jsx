@@ -11,7 +11,7 @@ const App = () => {
   const authUser = authContext?.authUser;
 
   return (
-    <div className="bg-[url('./src/assets/bgimage.jpg')] bg-contain ">
+    <div className="bg-[url('/assets/bgimage.jpg')] bg-contain ">
       <Toaster />
       <Routes>
         <Route
