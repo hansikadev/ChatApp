@@ -17,7 +17,7 @@ const server = http.createServer(app);
 // CORS CONFIGURATION
 // ======================
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://chat-app-in3a.vercel.app/login"],
+  origin: ["http://localhost:5173", "https://chat-app-in3a.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
