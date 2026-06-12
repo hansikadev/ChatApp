@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 import { AuthContext } from "../../context/AuthContext";
 
 
-const LoginPage = () => {
-  const [currState, setCurrState] = useState("Sign up")
+const LoginPage = ({ initialState = "Login" }) => {
+  const navigate = useNavigate();
+  const [currState, setCurrState] = useState(initialState)
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -114,10 +116,7 @@ const LoginPage = () => {
             <p className="text-sm text-gray-600">
               Already have an account?{" "}
               <span
-                onClick={() => {
-                  setCurrState("Login");
-                  setIsDataSubmitted(false);
-                }}
+                onClick={() => navigate("/login")}
                 className="font-medium text-violet-500 cursor-pointer"
               >
                 Login here
@@ -127,7 +126,7 @@ const LoginPage = () => {
             <p className="text-sm text-gray-600">
               Create an account{" "}
               <span
-                onClick={() => setCurrState("Sign up")}
+                onClick={() => navigate("/signup")}
                 className="font-medium text-violet-500 cursor-pointer"
               >
                 Click here

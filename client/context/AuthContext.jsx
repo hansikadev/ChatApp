@@ -1,4 +1,4 @@
- import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import axios from "axios";
@@ -26,54 +26,46 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const signup = async (credentials) => {
+    try {
+      const { data } = await axios.post("/api/auth/signup", credentials);
+
+      if (!data.success) {
+        toast.error(data.message);
+        return;
+      }
+
+      setAuthUser(data.userData);
+      setToken(data.token);
+      localStorage.setItem("token", data.token);
+      axios.defaults.headers.common["token"] = data.token;
+
+      connectSocket(data.userData);
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
+
   const login = async (credentials) => {
-  try {
-    const { data } = await axios.post(
-      "/api/auth/login",
-      credentials
-    );
+    try {
+      const { data } = await axios.post("/api/auth/login", credentials);
 
-    if (!data.success) {
-      toast.error(data.message);
-      return;
+      if (!data.success) {
+        toast.error(data.message);
+        return;
+      }
+
+      setAuthUser(data.userData);
+      setToken(data.token);
+      localStorage.setItem("token", data.token);
+      axios.defaults.headers.common["token"] = data.token;
+
+      connectSocket(data.userData);
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
     }
+  };
 
-    setAuthUser(data.userData);
-    setToken(data.token);
-    localStorage.setItem("token", data.token);
-    axios.defaults.headers.common["token"] = data.token;
-
-    connectSocket(data.userData);
-    
-
-  } catch (error) {
-    toast.error(
-      error.response?.data?.message || error.message
-    );
-  }
-};
-
-const signup = async (credentials) => {
-  try {
-    const { data } = await axios.post("/api/auth/signup", credentials);
-
-    if (!data.success) {
-      toast.error(data.message);
-      return;
-    }
-
-    setAuthUser(data.userData);
-    setToken(data.token);
-    localStorage.setItem("token", data.token);
-    axios.defaults.headers.common["token"] = data.token;
-
-    connectSocket(data.userData);
-   
-  } catch (error) {
-    toast.error(error.response?.data?.message || error.message);
-  }
-};
-  
   const logout = async () => {
     localStorage.removeItem("token");
     setToken(null);
@@ -127,7 +119,7 @@ const signup = async (credentials) => {
         login,
         logout,
         updateProfile,
-        axios
+        axios,
       }}
     >
       {children}
