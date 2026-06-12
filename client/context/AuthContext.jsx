@@ -26,29 +26,54 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ FIX: works for BOTH signup & login
-  const login = async (state, credentials) => {
-    try {
-      const { data } = await axios.post(`/api/auth/${state}`, credentials);
+  const login = async (credentials) => {
+  try {
+    const { data } = await axios.post(
+      "/api/auth/login",
+      credentials
+    );
 
-      if (!data.success) {
-        toast.error(data.message);
-        return;
-      }  
-
-      // ✅ BACKEND sends: userData + token
-      setAuthUser(data.userData);
-      axios.defaults.headers.common["token"] = data.token;
-      localStorage.setItem("token", data.token);
-      setToken(data.token);
-
-      connectSocket(data.userData);
-      toast.success(data.message);
-    } catch (error) {
-      toast.error(error.response?.data?.message || error.message);
+    if (!data.success) {
+      toast.error(data.message);
+      return;
     }
-  };
 
+    setAuthUser(data.userData);
+    setToken(data.token);
+    localStorage.setItem("token", data.token);
+    axios.defaults.headers.common["token"] = data.token;
+
+    connectSocket(data.userData);
+    toast.success(data.message);
+
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || error.message
+    );
+  }
+};
+
+const signup = async (credentials) => {
+  try {
+    const { data } = await axios.post("/api/auth/signup", credentials);
+
+    if (!data.success) {
+      toast.error(data.message);
+      return;
+    }
+
+    setAuthUser(data.userData);
+    setToken(data.token);
+    localStorage.setItem("token", data.token);
+    axios.defaults.headers.common["token"] = data.token;
+
+    connectSocket(data.userData);
+    toast.success(data.message);
+  } catch (error) {
+    toast.error(error.response?.data?.message || error.message);
+  }
+};
+  
   const logout = async () => {
     localStorage.removeItem("token");
     setToken(null);
