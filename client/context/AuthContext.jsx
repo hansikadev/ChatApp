@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     axios.defaults.headers.common["token"] = data.token;
 
     connectSocket(data.userData);
-    toast.success(data.message);
+    
 
   } catch (error) {
     toast.error(
@@ -68,7 +68,7 @@ const signup = async (credentials) => {
     axios.defaults.headers.common["token"] = data.token;
 
     connectSocket(data.userData);
-    toast.success(data.message);
+   
   } catch (error) {
     toast.error(error.response?.data?.message || error.message);
   }
