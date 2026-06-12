@@ -53,26 +53,26 @@ export const AuthProvider = ({ children }) => {
   }
 };
 
-const signup = async (credentials) => {
-  try {
-    const { data } = await axios.post("/api/auth/signup", credentials);
-
-    if (!data.success) {
-      toast.error(data.message);
-      return;
-    }
-
-    setAuthUser(data.userData);
-    setToken(data.token);
-    localStorage.setItem("token", data.token);
-    axios.defaults.headers.common["token"] = data.token;
-
-    connectSocket(data.userData);
-   
-  } catch (error) {
-    toast.error(error.response?.data?.message || error.message);
-  }
-};
+ const signup = async (credentials) => {
+   try {
+     const { data } = await axios.post("/api/auth/signup", credentials);
+ 
+     if (!data.success) {
+       toast.error(data.message);
+       return;
+     }
+ 
+     setAuthUser(data.userData);
+     setToken(data.token);
+     localStorage.setItem("token", data.token);
+     axios.defaults.headers.common["token"] = data.token;
+ 
+     connectSocket(data.userData);
+    
+   } catch (error) {
+     toast.error(error.response?.data?.message || error.message);
+   }
+ };
   
   const logout = async () => {
     localStorage.removeItem("token");
