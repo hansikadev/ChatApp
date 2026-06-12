@@ -4,9 +4,6 @@ import { io } from "socket.io-client";
 import axios from "axios";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
-if (backendUrl) {
-  axios.defaults.baseURL = backendUrl;
-}
 
 export const AuthContext = createContext();
 
