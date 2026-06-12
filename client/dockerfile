@@ -1,7 +1,17 @@
 FROM node:20-alpine
+
 WORKDIR /app
-COPY package.json ./
-COPY node_modules ./node_modules
+
+# Install dependencies first (better layer caching)
+COPY package.json package-lock.json ./
+
+RUN npm config set fetch-timeout 1200000 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm install --legacy-peer-deps
+
 COPY . .
+
 EXPOSE 5173
+
 CMD ["npx", "vite", "--host"]
