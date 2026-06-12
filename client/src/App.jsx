@@ -20,11 +20,19 @@ const App = () => {
         />
         <Route
           path="/login"
-          element={authUser ? <Navigate to="/" /> : <Loginpage initialState="Login" />}
+          element={
+            authUser ? <Navigate to="/" /> : <Loginpage initialState="Login" />
+          }
         />
         <Route
           path="/signup"
-          element={authUser ? <Navigate to="/" /> : <Loginpage initialState="Sign up" />}
+          element={
+            authUser ? (
+              <Navigate to="/" />
+            ) : (
+              <Loginpage initialState="Sign up" />
+            )
+          }
         />
         <Route
           path="/profile"
