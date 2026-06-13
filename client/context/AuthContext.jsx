@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
       if (!data.success) {
         toast.error(data.message);
-        return; 
+        return;
       }
 
       setAuthUser(data.userData);
