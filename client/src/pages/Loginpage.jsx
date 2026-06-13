@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 import { AuthContext } from "../../context/AuthContext";
@@ -12,7 +12,13 @@ const LoginPage = ({ initialState = "Login" }) => {
   const [bio, setBio] = useState("");
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
-  const { login } = useContext(AuthContext);
+  const { login, signup } = useContext(AuthContext);
+
+  // Update currState when initialState prop changes
+  useEffect(() => {
+    setCurrState(initialState);
+    setIsDataSubmitted(false); // Reset form when switching pages
+  }, [initialState]);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
@@ -21,12 +27,18 @@ const LoginPage = ({ initialState = "Login" }) => {
       return;
     }
 
-    login(currState === "Sign up" ? "signup" : "login", {
+    const credentials = {
       fullName,
       email,
       password,
       bio,
-    });
+    };
+
+    if (currState === "Sign up") {
+      signup(credentials);
+    } else {
+      login(credentials);
+    }
   };
 
   return (

@@ -5,6 +5,9 @@ import axios from "axios";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+// Configure axios to use backend URL
+axios.defaults.baseURL = backendUrl;
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -32,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
       if (!data.success) {
         toast.error(data.message);
-        return;
+        return; 
       }
 
       setAuthUser(data.userData);
@@ -117,6 +120,7 @@ export const AuthProvider = ({ children }) => {
         onlineUsers,
         socket,
         login,
+        signup,
         logout,
         updateProfile,
         axios,
